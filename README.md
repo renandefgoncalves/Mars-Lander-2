@@ -1,59 +1,53 @@
-# Mars Lander - Episode 2
+# Mars Lander - Episódio 2
 
-## The Goal
-The goal for your program is to safely land the "Mars Lander" shuttle, the landing ship which contains the Opportunity rover. Mars Lander is guided by a program, and right now the failure rate for landing on the NASA simulator is unacceptable.
+## O Objetivo
+O objetivo deste projeto é desenvolver um programa capaz de pousar com segurança a nave "Mars Lander" em uma área específica da superfície de Marte. A nave transporta o rover Opportunity e é controlada por um algoritmo que deve ajustar o ângulo de inclinação e a potência dos propulsores para garantir a integridade da missão.
 
-This puzzle is the second level of the "Mars Lander" trilogy. The controls are the same as the previous level but you must now control the angle in order to succeed.
+## Regras e Ambiente
+O simulador situa a nave em uma zona do céu marciano com **7000m** de largura e **3000m** de altura.
 
-## Rules
-Built as a game, the simulator puts Mars Lander on a limited zone of Mars sky.
-<img width="468" height="265" alt="image" src="https://github.com/user-attachments/assets/0bf2d10a-1e3a-45d7-b7a3-2bb82e6b1b5d" /> The zone is **7000m** wide and **3000m** high.
+<img width="468" height="265" alt="Ambiente de Marte" src="https://github.com/user-attachments/assets/0bf2d10a-1e3a-45d7-b7a3-2bb82e6b1b5d" />
 
-There is a **unique area of flat ground** on the surface of Mars, which is at least **1000** meters wide.
+* **Terreno:** Existe apenas uma **área de solo plano** na superfície, com pelo menos **1000m** de largura.
+* **Controles:** O programa deve fornecer o ângulo de inclinação (**-90° a 90°**) e a potência de empuxo (**0 a 4**) a cada segundo.
+* **Física:** A gravidade em Marte é de **3,711 m/s²**. Uma potência de empuxo de 4 compensa a gravidade em uma posição vertical.
+* **Consumo:** Para cada unidade de potência $X$, são consumidos $X$ litros de combustível por segundo.
 
-Every second, depending on the current flight parameters (location, speed, fuel ...), the program must provide the new desired tilt angle and thrust power of Mars Lander:
-<img width="505" height="208" alt="image" src="https://github.com/user-attachments/assets/be82258f-453b-4292-8190-3656e94a1760" />
-- **Angle** goes from -90° to 90°.
-- **Thrust power** goes from 0 to 4.
+<img width="505" height="208" alt="Controles da Nave" src="https://github.com/user-attachments/assets/be82258f-453b-4292-8190-3656e94a1760" />
 
-The game simulates a **free fall** without atmosphere. Gravity on Mars is **3.711 m/s²**. For a thrust power of X, a push force equivalent to **X m/s²** is generated and **X liters of fuel** are consumed. As such, a thrust power of 4 in an almost vertical position is needed to compensate for the gravity on Mars.
+### Requisitos para um Pouso Bem-Sucedido
+Para não destruir a nave, os seguintes parâmetros devem ser respeitados no momento do contacto com o solo:
+1.  Pousar exactamente sobre o **solo plano**.
+2.  Estar em **posição vertical** (ângulo de inclinação = 0°).
+3.  **Velocidade vertical** limitada a ≤ 40 m/s (em valor absoluto).
+4.  **Velocidade horizontal** limitada a ≤ 20 m/s (em valor absoluto).
 
-### Landing Requirements
-For a landing to be successful, the ship must:
-1. Land on **flat ground**.
-2. Land in a **vertical position** (tilt angle = 0°).
-3. **Vertical speed** must be limited (≤ 40m/s in absolute value).
-4. **Horizontal speed** must be limited (≤ 20m/s in absolute value).
+## Estrutura do Projecto
 
-> **Note:** Tests and validators are only slightly different. A program that passes a given test will pass the corresponding validator without any problem.
+* **Linguagem:** Python 3
+* **Entrada:** Dados de inicialização da superfície e dados de telemetria em tempo real (X, Y, velocidades, combustível, etc.).
+* **Saída:** Comando de rotação e potência por turno.
 
-## Game Input
-The program must first read the initialization data from standard input. Then, within an infinite loop, the program must read the data related to Mars Lander's current state and provide the instructions to move the ship.
+### Restrições Técnicas
+* O ângulo pode mudar no máximo **15°** por turno.
+* A potência pode mudar no máximo **1** unidade por turno.
+* Tempo de resposta máximo de **100ms** por turno.
 
-### Initialization Input
-- **Line 1:** `surfaceN` (the number of points used to draw the surface).
-- **Next `surfaceN` lines:** `landX landY` (coordinates of a ground point). The surface is formed by linking these points sequentially.
-    - First point: `landX = 0`.
-    - Last point: `landX = 6999`.
+---
 
-### Input for One Game Turn
-A single line with 7 integers: `X Y hSpeed vSpeed fuel rotate power`
-- **X, Y:** Coordinates of Mars Lander (meters).
-- **hSpeed, vSpeed:** Horizontal and vertical speed (m/s).
-- **fuel:** Remaining fuel in liters.
-- **rotate:** Current rotation angle in degrees.
-- **power:** Current thrust power.
+## Insights de Desenvolvimento
 
-### Output for One Game Turn
-A single line with 2 integers: `rotate power`
-- **rotate:** Desired rotation angle. (Limited to +/- 15° per turn).
-- **power:** Desired thrust power (0-4). (Limited to +/- 1 per turn).
+1.  **Código Unificado:** O algoritmo foi desenvolvido para ser robusto o suficiente para passar nos 5 testes do simulador sem ajustes manuais, lidando com diferentes coordenadas e velocidades iniciais.
+2.  **Lógica de Estados:** Em vez de usar frames fixos ou tempos pré-determinados, o código utiliza lógica baseada na distância até o alvo e controlo de velocidade vetorial.
+3.  **Ganho de Altitude:** A nave possui capacidade de subir se necessário (usando potência 4 e ângulo vertical), permitindo desviar de obstáculos antes de atingir a zona de pouso.
 
-## Constraints
-- 2 ≤ `surfaceN` < 30
-- 0 ≤ `X` < 7000 | 0 ≤ `Y` < 3000
-- -500 < `hSpeed`, `vSpeed` < 500
-- 0 ≤ `fuel` ≤ 2000
-- -90 ≤ `rotate` ≤ 90
-- 0 ≤ `power` ≤ 4
-- Response time per turn ≤ 100ms
+## Como Executar
+
+1.  Copie o código contido no ficheiro `app.py` deste repositório.
+2.  Aceda ao desafio no [CodinGame - Mars Lander Episode 2](https://www.codingame.com/ide/puzzle/mars-lander-episode-2).
+3.  Cole o código no editor da plataforma.
+4.  Selecione **Python 3** como linguagem.
+5.  Clique em **Play All Test Cases** para validar a solução.
+
+---
+*Este projecto foi desenvolvido como parte de um estudo de lógica de programação e automação com Python.*
