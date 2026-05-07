@@ -1,7 +1,7 @@
 # Mars Lander - Episódio 2
 
-## O Objetivo
-O objetivo deste projeto é desenvolver um programa capaz de pousar com segurança a nave "Mars Lander" em uma área específica da superfície de Marte. A nave transporta o rover Opportunity e é controlada por um algoritmo que deve ajustar o ângulo de inclinação e a potência dos propulsores para garantir a integridade da missão.
+## Objetivo
+O objetivo deste desafio é desenvolver um programa capaz de pousar com segurança a nave "Mars Lander" em uma área específica da superfície de Marte. A nave transporta o rover Opportunity e é controlada por um algoritmo que deve ajustar o ângulo de inclinação e a potência dos propulsores para garantir a integridade da missão.
 
 ## Regras e Ambiente
 O simulador situa a nave em uma zona do céu marciano com **7000m** de largura e **3000m** de altura.
@@ -16,13 +16,13 @@ O simulador situa a nave em uma zona do céu marciano com **7000m** de largura e
 <img width="505" height="208" alt="Controles da Nave" src="https://github.com/user-attachments/assets/be82258f-453b-4292-8190-3656e94a1760" />
 
 ### Requisitos para um Pouso Bem-Sucedido
-Para não destruir a nave, os seguintes parâmetros devem ser respeitados no momento do contacto com o solo:
-1.  Pousar exactamente sobre o **solo plano**.
+Para não destruir a nave, os seguintes parâmetros devem ser respeitados no momento do contato com o superfície de Marte:
+1.  Pousar exatamente sobre o **solo plano**.
 2.  Estar em **posição vertical** (ângulo de inclinação = 0°).
 3.  **Velocidade vertical** limitada a ≤ 40 m/s (em valor absoluto).
 4.  **Velocidade horizontal** limitada a ≤ 20 m/s (em valor absoluto).
 
-## Estrutura do Projecto
+## Estrutura do Projeto
 
 * **Linguagem:** Python 3
 * **Entrada:** Dados de inicialização da superfície e dados de telemetria em tempo real (X, Y, velocidades, combustível, etc.).
@@ -43,8 +43,8 @@ Para não destruir a nave, os seguintes parâmetros devem ser respeitados no mom
 
 ## Como Executar
 
-1.  Copie o código contido no ficheiro `app.py` deste repositório.
-2.  Aceda ao desafio no [CodinGame - Mars Lander Episode 2](https://www.codingame.com/ide/puzzle/mars-lander-episode-2).
+1.  Copie o código contido no arquivo `app.py` deste repositório.
+2.  Acesse o desafio no [CodinGame - Mars Lander Episode 2](https://www.codingame.com/ide/puzzle/mars-lander-episode-2).
 3.  Cole o código no editor da plataforma.
 4.  Selecione **Python 3** como linguagem.
 5.  Clique em **Play All Test Cases** para validar a solução.
